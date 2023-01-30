@@ -21,25 +21,38 @@ class ProductManager {
 
   addProduct() {
     let codigo = products.find((product) => product.code == this.code);
-    if (codigo == undefined) {
-      products.push({
-        id: products.length + 1,
-        title: this.title,
-        description: this.description,
-        price: this.price,
-        thumbnail: this.thumbnail,
-        code: this.code,
-        stock: this.stock,
-      });
+    if (
+      codigo == "" ||
+      this.title == "" ||
+      this.description == "" ||
+      this.price == "" ||
+      this.thumbnail == "" ||
+      this.stock == ""
+    ) {
       console.log(
-        "El producto con código: " +
-          this.code +
-          " se ha cargado satisfactoriamente"
+        "Todos los campos deben estar cargado para poder cargar un producto"
       );
     } else {
-      console.log(
-        "El código de producto que desea ingresar ya se encuentra cargado"
-      );
+      if (codigo == undefined) {
+        products.push({
+          id: products.length + 1,
+          title: this.title,
+          description: this.description,
+          price: this.price,
+          thumbnail: this.thumbnail,
+          code: this.code,
+          stock: this.stock,
+        });
+        console.log(
+          "El producto con código: " +
+            this.code +
+            " se ha cargado satisfactoriamente"
+        );
+      } else {
+        console.log(
+          "El código de producto que desea ingresar ya se encuentra cargado"
+        );
+      }
     }
   }
 
@@ -87,7 +100,7 @@ function main() {
   //Cargando producto 2 que no se debería cargar y avisar que el producto con dicho código ya se encuentra cargado
   const p2 = new ProductManager(
     (title = "Producto prueba"),
-    (description = "Este es un producto prueba"),
+    (description = "Este es un producto prueba 2"),
     (price = 200),
     (thumbnail = "Sin imagen"),
     (code = "abc123"),
