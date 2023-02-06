@@ -1,5 +1,6 @@
 //Manejo de Archivos
-const { readFileSync, writeFileSync } = require("fs");
+// const { readFile, writeFile } = require("fs");
+const fs = require("fs");
 const PATH = "./products.txt";
 
 class ProductManager {
@@ -22,16 +23,12 @@ class ProductManager {
     return;
   }
 
-  addProduct() {
+  async addProduct() {
     let products = [];
-    let error;
 
     try {
-      let arrayProductos = readFileSync(this.path, "utf-8");
+      let arrayProductos = await fs.promises.readFile(this.path, "utf-8");
       arrayProductos = JSON.parse(arrayProductos);
-      //let codigo = arrayProductos.find((product) => product.code == this.code);
-
-      //if (codigo == undefined) {
       if (!arrayProductos.some((product) => product.code == this.code)) {
         if (
           this.codigo != "" &&
@@ -54,7 +51,7 @@ class ProductManager {
           arrayProductos = JSON.stringify(arrayProductos);
 
           try {
-            writeFileSync(this.path, arrayProductos);
+            await fs.promises.writeFile(this.path, arrayProductos);
             console.log(
               "El producto con código: " +
                 this.code +
@@ -98,7 +95,7 @@ class ProductManager {
         products = JSON.stringify(products);
 
         try {
-          writeFileSync(this.path, products);
+          await fs.promises.writeFile(this.path, products);
           console.log(
             "El producto con código: " +
               this.code +
@@ -111,21 +108,34 @@ class ProductManager {
     }
   }
 
-  getProducts() {
+  async getProducts() {
     try {
-      let arrayProductos = readFileSync("./products.txt", "utf-8");
+      let arrayProductos = await fs.promises.readFile(
+        "./products.txt",
+        "utf-8"
+      );
       arrayProductos = JSON.parse(arrayProductos);
       console.log("Los productos cargados son: ");
       console.log(arrayProductos);
       return arrayProductos;
     } catch {
-      console.log("NO se pudo leer el archivo");
+      let arrayVacio = [];
+      arrayVacio = JSON.stringify(arrayVacio);
+      try {
+        await fs.promises.writeFile("./products.txt", arrayVacio);
+        console.log(await fs.promises.readFile("./products.txt", "utf-8"));
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
-  getProductById(iden) {
+  async getProductById(iden) {
     try {
-      let arrayProductos = readFileSync("./products.txt", "utf-8");
+      let arrayProductos = await fs.promises.readFile(
+        "./products.txt",
+        "utf-8"
+      );
       arrayProductos = JSON.parse(arrayProductos);
       let id = arrayProductos.find((product) => product.id == iden);
       if (id == undefined) {
@@ -140,9 +150,12 @@ class ProductManager {
     }
   }
 
-  updateProduct(id, parametro, nuevoValor) {
+  async updateProduct(id, parametro, nuevoValor) {
     try {
-      let arrayProductos = readFileSync("./products.txt", "utf-8");
+      let arrayProductos = await fs.promises.readFile(
+        "./products.txt",
+        "utf-8"
+      );
       arrayProductos = JSON.parse(arrayProductos);
       let updateProduct = arrayProductos.find((product) => product.id == id);
       let indice = arrayProductos.indexOf(updateProduct);
@@ -170,32 +183,35 @@ class ProductManager {
         arrayProductos[indice] = updateProduct;
         arrayProductos = JSON.stringify(arrayProductos);
         try {
-          writeFileSync("./products.txt", arrayProductos);
+          await fs.promises.writeFile("./products.txt", arrayProductos);
         } catch {
           console.log("No se pudo cargar el producto xd");
         }
       } else {
-        console.log("El producto no se encuentra cargado");
+        console.log("El producto que desea modificar no se encuentra cargado");
       }
     } catch (error) {
       console.log(error);
     }
   }
 
-  deleteProduct(id) {
+  async deleteProduct(id) {
     try {
-      let arrayProductos = readFileSync("./products.txt", "utf-8");
+      let arrayProductos = await fs.promises.readFile(
+        "./products.txt",
+        "utf-8"
+      );
       arrayProductos = JSON.parse(arrayProductos);
       let deleteProduct = arrayProductos.find((product) => product.id == id);
       if (deleteProduct != undefined) {
         arrayProductos.pop(deleteProduct);
       } else {
-        console.log("El producto no se encuentra cargado");
+        console.log("El producto que desea eliminar no se encuentra cargado");
       }
 
       try {
         arrayProductos = JSON.stringify(arrayProductos);
-        writeFileSync("./products.txt", arrayProductos);
+        await fs.promises.writeFile("./products.txt", arrayProductos);
       } catch (error) {
         console.log(error);
       }
@@ -206,14 +222,12 @@ class ProductManager {
 }
 
 //Ejecutamos el sistema principal
-main();
-
-function main() {
+async function main() {
   // Primero hacemos un get product que me muestre mi array vacío.
   const obtenerProducto = new ProductManager();
-  obtenerProducto.getProducts();
+  await obtenerProducto.getProducts();
 
-  //Cargando producto 1
+  //Ahora agregamos un producto
   const p1 = new ProductManager(
     (path = PATH),
     (title = "Producto prueba"),
@@ -223,32 +237,36 @@ function main() {
     (code = "abc123"),
     (stock = 25)
   );
-  p1.addProduct();
+  await p1.addProduct();
 
-  //Mostramos mi primer producto cargado
-  obtenerProducto.getProducts();
+  //Mostramos el primer producto cargado
+  await obtenerProducto.getProducts();
 
-  //Cargando producto 2 que no se debería cargar y avisar que el producto con dicho código ya se encuentra cargado
-  // const p2 = new ProductManager(
-  //   (title = "Producto prueba"),
-  //   (description = "Este es un producto prueba 2"),
-  //   (price = 200),
-  //   (thumbnail = "Sin imagen"),
-  //   (code = "abc123"),
-  //   (stock = 25)
-  // );
-  // p2.addProduct();
+  //Cargando producto 2
+  const p2 = new ProductManager(
+    (path = PATH),
+    (title = "Producto prueba 2"),
+    (description = "Este es un producto prueba 2"),
+    (price = 200),
+    (thumbnail = "Sin imagen"),
+    (code = "abc1234"),
+    (stock = 25)
+  );
+  await p2.addProduct();
 
   // Ahora vamos a buscar un producto por ID. Si existe devuelve el producto, sino muestra un mensaje de error
-  const pId1 = new ProductManager().getProductById(1);
+  const pId1 = new ProductManager();
+  await pId1.getProductById(2);
 
   //Modificamos el elemento con id 1
-  const modificarProducto = new ProductManager().updateProduct(
+  const modificarProducto = await new ProductManager().updateProduct(
     1,
     "title",
     "Nuevo titulo"
   );
 
   //Eliminamos el producto con el ID y mostramos array
-  const deletee = new ProductManager().deleteProduct(1);
+  const deletee = await new ProductManager().deleteProduct(3);
 }
+
+main();
