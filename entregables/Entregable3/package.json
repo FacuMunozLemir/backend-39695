@@ -1,9 +1,9 @@
 {
   "type": "module",
-  "name": "clase-07",
+  "name": "entregable3",
   "version": "1.0.0",
   "description": "",
-  "main": "servidor.js",
+  "main": "./src/app.js",
   "scripts": {
     "start": "node .",
     "test": "nodemon ."
