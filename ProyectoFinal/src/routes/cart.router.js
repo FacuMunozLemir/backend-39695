@@ -14,4 +14,17 @@ cartRouter.post("/", async (req, res) => {
   res.send(resultado);
 });
 
+cartRouter.get("/:cid", async (req, res) => {
+  let idCarrito = req.params.cid;
+  let resultado = await cart.getProductById(idCarrito);
+  res.send(resultado);
+});
+
+cartRouter.post("/:cid/products/:pid", async (req, res) => {
+  let idCarrito = req.params.cid;
+  let idProducto = req.params.pid;
+  let resultado = await cart.addProductById(idCarrito, idProducto);
+  res.send(resultado);
+});
+
 export default cartRouter;
