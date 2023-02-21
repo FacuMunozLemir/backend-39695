@@ -1,11 +1,10 @@
 {
   "type": "module",
-  "name": "entregable3",
+  "name": "proyectofinal",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node .",
     "test": "nodemon ."
   },
   "keywords": [],
