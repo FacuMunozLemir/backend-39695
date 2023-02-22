@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "comision39695",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ProyectoFinal/src/app.js",
+  "scripts": {
+    "test": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FacuMunozLemir/backend-39695.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FacuMunozLemir/backend-39695/issues"
+  },
+  "homepage": "https://github.com/FacuMunozLemir/backend-39695#readme",
+  "dependencies": {
+    "espress": "^0.0.0",
+    "express": "^4.18.2"
+  }
+}
