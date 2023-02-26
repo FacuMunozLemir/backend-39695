@@ -9,7 +9,7 @@ export class CartManager {
 
   async insertCart(productoAgregado) {
     try {
-      let arrayCart = await readFile("./public/carts.json");
+      let arrayCart = await readFile("./ProyectoFinal/public/carts.json");
       arrayCart = JSON.parse(arrayCart);
       let arrayDeProductos = [];
       productoAgregado.forEach((element) => {
@@ -22,7 +22,7 @@ export class CartManager {
       arrayCart.push(agregarProducto);
       arrayCart = JSON.stringify(arrayCart);
       try {
-        await writeFile("./public/carts.json", arrayCart);
+        await writeFile("./ProyectoFinal/public/carts.json", arrayCart);
       } catch {
         console.log("No se pudo cargar el carrito");
       }
@@ -36,7 +36,7 @@ export class CartManager {
     let arrayProductosEnCart = [];
     let arrayAuxiliar = [];
     try {
-      let arrayCarts = await readFile("./public/carts.json", "UTF-8");
+      let arrayCarts = await readFile("./ProyectoFinal/public/carts.json", "UTF-8");
       arrayCarts = JSON.parse(arrayCarts);
       let cartEncontrado = arrayCarts.find((el) => el.id == id);
       if (cartEncontrado != undefined) {
@@ -59,7 +59,7 @@ export class CartManager {
     let indexOfCart;
 
     try {
-      let arrayCarts = await readFile("./public/carts.json", "UTF-8");
+      let arrayCarts = await readFile("./ProyectoFinal/public/carts.json", "UTF-8");
       arrayCarts = JSON.parse(arrayCarts);
       let cartEncontrado = arrayCarts.find((el) => el.id == cartId);
       if (cartEncontrado != undefined) {
@@ -77,7 +77,7 @@ export class CartManager {
           arrayCarts[indexOfCart] = cartEncontrado;
           try {
             arrayCarts = JSON.stringify(arrayCarts);
-            await writeFile("./public/carts.json", arrayCarts);
+            await writeFile("./ProyectoFinal/public/carts.json", arrayCarts);
             return arrayCarts;
           } catch (error) {
             return error;
@@ -91,7 +91,7 @@ export class CartManager {
           arrayCarts[(indexOfCart = cartEncontrado)];
           try {
             arrayCarts = JSON.stringify(arrayCarts);
-            await writeFile("./public/carts.json", arrayCarts);
+            await writeFile("./ProyectoFinal/public/carts.json", arrayCarts);
             return arrayCarts;
           } catch (error) {
             return error;
