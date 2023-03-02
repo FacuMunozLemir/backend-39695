@@ -36,7 +36,10 @@ export class CartManager {
     let arrayProductosEnCart = [];
     let arrayAuxiliar = [];
     try {
-      let arrayCarts = await readFile("./ProyectoFinal/public/carts.json", "UTF-8");
+      let arrayCarts = await readFile(
+        "./ProyectoFinal/public/carts.json",
+        "UTF-8"
+      );
       arrayCarts = JSON.parse(arrayCarts);
       let cartEncontrado = arrayCarts.find((el) => el.id == id);
       if (cartEncontrado != undefined) {
@@ -59,7 +62,10 @@ export class CartManager {
     let indexOfCart;
 
     try {
-      let arrayCarts = await readFile("./ProyectoFinal/public/carts.json", "UTF-8");
+      let arrayCarts = await readFile(
+        "./ProyectoFinal/public/carts.json",
+        "UTF-8"
+      );
       arrayCarts = JSON.parse(arrayCarts);
       let cartEncontrado = arrayCarts.find((el) => el.id == cartId);
       if (cartEncontrado != undefined) {

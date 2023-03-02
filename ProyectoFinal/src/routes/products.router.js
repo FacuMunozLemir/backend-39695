@@ -1,6 +1,6 @@
 import express from "express";
 import { Router } from "express";
-import { ProductManager } from "../ClassProductManager.js";
+import { ProductManager } from "../classes/ClassProductManager.js";
 
 const usersRouter = Router("/api/products");
 usersRouter.use(express.urlencoded({ extended: true }));
@@ -9,7 +9,11 @@ const producto = new ProductManager();
 usersRouter.get("/", async (req, res) => {
   let limite = req.query.limit;
   let resultado = await producto.getProducts(limite);
-  res.send({ resultado });
+  res.render("home", {
+    titulo: "Products",
+    hayProductos: resultado.length > 0,
+    producto: resultado,
+  });
 });
 
 usersRouter.get("/:pid", async (req, res) => {

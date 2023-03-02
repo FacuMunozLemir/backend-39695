@@ -1,6 +1,6 @@
 import express from "express";
 import { Router } from "express";
-import { CartManager } from "../ClassCartManager.js";
+import { CartManager } from "../classes/ClassCartManager.js";
 // import { ProductManager } from "../ClassProductManager.js";
 
 const cartRouter = Router("/api/carts");
