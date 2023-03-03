@@ -21,39 +21,6 @@ export class ProductManager {
     return;
   }
 
-  async getProducts(limite) {
-    let nuevoArreglo = [];
-    try {
-      let arrayProductos = await readFile("./ProyectoFinal/public/products.json", "utf-8");
-      arrayProductos = JSON.parse(arrayProductos);
-      if (limite == " " || limite == null) {
-        return arrayProductos;
-      } else {
-        for (let i = 0; i < limite; i++) {
-          nuevoArreglo.push(arrayProductos[i]);
-        }
-        return nuevoArreglo;
-      }
-    } catch (error) {
-      return error;
-    }
-  }
-
-  async getProductById(iden) {
-    try {
-      let arrayProductos = await readFile("./ProyectoFinal/public/products.json", "utf-8");
-      arrayProductos = JSON.parse(arrayProductos);
-      let id = arrayProductos.find((product) => product.id == iden);
-      if (id == undefined) {
-        return "El producto que está buscando no se encuentra cargado";
-      } else {
-        return id;
-      }
-    } catch (error) {
-      return error;
-    }
-  }
-
   async insertProduct(prod) {
     try {
       let arrayProductos = await this.getProducts();
@@ -92,7 +59,7 @@ export class ProductManager {
 
       arrayProductos = JSON.stringify(arrayProductos);
       try {
-        await writeFile("./ProyectoFinal/public/products.json", arrayProductos);
+        await writeFile("./public/products.json", arrayProductos);
       } catch {
         console.log("No se pudo cargar el producto");
       }
@@ -102,9 +69,42 @@ export class ProductManager {
     }
   }
 
+  async getProducts(limite) {
+    let nuevoArreglo = [];
+    try {
+      let arrayProductos = await readFile("./public/products.json", "utf-8");
+      arrayProductos = JSON.parse(arrayProductos);
+      if (limite == " " || limite == null) {
+        return arrayProductos;
+      } else {
+        for (let i = 0; i < limite; i++) {
+          nuevoArreglo.push(arrayProductos[i]);
+        }
+        return nuevoArreglo;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getProductById(iden) {
+    try {
+      let arrayProductos = await readFile("./public/products.json", "utf-8");
+      arrayProductos = JSON.parse(arrayProductos);
+      let id = arrayProductos.find((product) => product.id == iden);
+      if (id == undefined) {
+        return "El producto que está buscando no se encuentra cargado";
+      } else {
+        return id;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
   async updateProduct(id, prod) {
     try {
-      let arrayProductos = await readFile("./ProyectoFinal/public/products.json", "utf-8");
+      let arrayProductos = await readFile("./public/products.json", "utf-8");
       arrayProductos = JSON.parse(arrayProductos);
       let updateProduct = arrayProductos.find((product) => product.id == id);
       let indice = arrayProductos.indexOf(updateProduct);
@@ -120,7 +120,7 @@ export class ProductManager {
 
         arrayProductos = JSON.stringify(arrayProductos);
         try {
-          await writeFile("./ProyectoFinal/public/products.json", arrayProductos);
+          await writeFile("./public/products.json", arrayProductos);
         } catch (error) {
           console.log(error);
         }
@@ -135,7 +135,7 @@ export class ProductManager {
 
   async deleteProduct(id) {
     try {
-      let arrayProductos = await readFile("./ProyectoFinal/public/products.json", "utf-8");
+      let arrayProductos = await readFile("./public/products.json", "utf-8");
       arrayProductos = JSON.parse(arrayProductos);
       let deleteProduct = arrayProductos.find((product) => product.id == id);
       if (deleteProduct != undefined) {
@@ -146,7 +146,7 @@ export class ProductManager {
 
       try {
         arrayProductos = JSON.stringify(arrayProductos);
-        await writeFile("./ProyectoFinal/public/products.json", arrayProductos);
+        await writeFile("./public/products.json", arrayProductos);
         return arrayProductos;
       } catch (error) {
         console.log(error);

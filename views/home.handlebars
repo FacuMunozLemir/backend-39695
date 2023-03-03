@@ -1,13 +1,19 @@
+<h1>Lista de Productos:</h1>
+<br />
+
 {{#if hayProductos}}
   <ul>
     {{#each producto}}
       <li>
         Nombre:
         {{this.title}}
+        <br />
+        Descripcion:
+        {{this.description}}
       </li>
     {{/each}}
   </ul>
   {{!-- {{usuarios}} --}}
 {{else}}
-  <h3>No hay usuarios para mostrar</h3>
+  <h3>No hay productos para mostrar</h3>
 {{/if}}

@@ -3,7 +3,7 @@
   "name": "comision39695",
   "version": "1.0.0",
   "description": "",
-  "main": "ProyectoFinal/src/app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "nodemon ."
   },
